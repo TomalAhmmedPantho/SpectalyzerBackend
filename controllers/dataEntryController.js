@@ -16,7 +16,7 @@ class DataController {
         outgoingCount, screenTime, junkFood, makingNoise, walking, showingAnger, glassCrashTendency, pushingTendency, itemThrowTendency,
         foodWaterThrowTendency, hitWithHand, hitWithHead, cooperateAtSchool, cooperateAtHome, cuttingNails, hairDressing, bedwetting,
          regularMedication, otherSickness, nameOfSickness, medOtherSickness, listOfMedicine, masturbation, toilet, overnightSleeping,
-          specialActivity, createdAt } = req.body;
+          specialActivity} = req.body;
       
   // Check if the dateOfRecord already exists for this user
   const existingEntry = await DataModel.findOne({ userId: req.user._id, dateOfRecord });
