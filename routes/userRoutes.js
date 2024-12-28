@@ -22,6 +22,12 @@ router.post('/createEntry', checkUserAuth, (req, res, next) => {
     next();
   }, DataController.createEntry);
   
-router.get('/getUserEntries', DataController.getUserEntries)
-
+router.get('/getUserEntries', checkUserAuth, DataController.getUserEntries);
+router.get('/getMeanandSD', checkUserAuth, DataController.getMeanandSD);
+router.get('/getStandardizedValue', checkUserAuth, DataController.getStandardizedValue);
+// router.get('/getWeightedScore', checkUserAuth, DataController.getWeightedScore);
+// router.get('/getRowMean', checkUserAuth, DataController.getRowMean);
+// router.get('/getSDofRM', checkUserAuth, DataController.getSDofRM);
+// router.get('/finalScore', checkUserAuth, DataController.finalScore);
+router.get('/getFinalScore', checkUserAuth, DataController.getFinalScore);
 export default router

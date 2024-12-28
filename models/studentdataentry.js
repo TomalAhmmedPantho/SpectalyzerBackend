@@ -48,7 +48,7 @@ const StudentDataSchema = new mongoose.Schema({
   overnightSleeping: { type: Number, min: 0, max: 10 },
   specialActivity: { type: String, required: true, trim: true},
   // prescriptionReports: { type: String, required: true, trim: true},
-  // createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now }
 });
 
 const DataModel = mongoose.model("StudentData", StudentDataSchema);
