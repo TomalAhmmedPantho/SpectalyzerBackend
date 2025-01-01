@@ -1,33 +1,38 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
-import cors from 'cors';
+import cors from 'cors'
+import morgan from 'morgan'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
+import './controllers/cronJobs.js'
 import connectDB from './config/connectdb.js'
 import userRoutes from './routes/userRoutes.js'
- 
-// Import cron jobs
-import './controllers/cronJobs.js'; // Ensure this path matches your file structure
-
 
 const app = express()
 const port = process.env.PORT
 const DATABASE_URL = process.env.DATABASE_URL
 
-//cors Policy
+// Middleware
 app.use(cors())
-
-
-//Database Connection
-connectDB(DATABASE_URL)
-
-//JSON
+app.use(morgan('common'))
+app.use(helmet())
 app.use(express.json())
 
-//Load Routes
-app.use("/api/user", userRoutes);
-console.log("User routes loaded"); // Debugging purpose
+// Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again after 15 minutes'
+})
+app.use(limiter)
 
+// Database Connection
+connectDB(DATABASE_URL)
+
+// Load Routes
+app.use("/api/user", userRoutes)
 
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`)
-}) 
+  console.log(`Server running on port ${port}`)
+})
