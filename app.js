@@ -5,7 +5,6 @@ import cors from 'cors'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
-import './controllers/cronJobs.js'
 import connectDB from './config/connectdb.js'
 import userRoutes from './routes/userRoutes.js'
 
@@ -22,7 +21,7 @@ app.use(express.json())
 // Rate Limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again after 15 minutes'
 })
 app.use(limiter)
